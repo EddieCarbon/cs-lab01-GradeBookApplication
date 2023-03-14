@@ -25,22 +25,21 @@ namespace GradeBook.GradeBooks
             {
                 return 'A';
             }
-            else if (averageGrade >= orderedGrades[top20PercentCount * 2 - 1])
+
+            if (averageGrade >= orderedGrades[top20PercentCount * 2 - 1])
             {
                 return 'B';
             }
-            else if (averageGrade >= orderedGrades[top20PercentCount * 3 - 1])
+            if (averageGrade >= orderedGrades[top20PercentCount * 3 - 1])
             {
                 return 'C';
             }
-            else if (averageGrade >= orderedGrades[top20PercentCount * 4 - 1])
+            if (averageGrade >= orderedGrades[top20PercentCount * 4 - 1])
             {
                 return 'D';
             }
-            else
-            {
-                return 'F';
-            }
+
+            return 'F';
         }
         
         public override void CalculateStatistics()
@@ -50,8 +49,9 @@ namespace GradeBook.GradeBooks
                 Console.WriteLine("Ranked grading requires at least 5 students.");
                 return;
             }
-            else
-                base.CalculateStatistics();
+            
+            base.CalculateStatistics();
+
         }
         
         
