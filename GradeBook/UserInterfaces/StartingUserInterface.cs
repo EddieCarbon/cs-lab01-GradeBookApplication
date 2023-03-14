@@ -34,44 +34,68 @@ namespace GradeBook.UserInterfaces
         public static void CreateCommand(string command)
         {
             var parts = command.Split(' ');
-            if (parts.Length != 4)
-            {
-                Console.WriteLine("Command not valid, Create requires a name and type of gradebook.");
-                return;
-            }
-            
             var name = parts[1];
             
-            if (bool.TryParse(parts[3], out var isWeighted))
+            if (parts.Length != 4)
             {
-                // Use the `isWeighted` variable here
+                Console.WriteLine("Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
+                return;
+            }
+
+            if (parts[2] == "standard" & parts[3] == "true")
+            {
+                BaseGradeBook gradeBook = new StandardGradeBook(name, true);
+                GradeBookUserInterface.CommandLoop(gradeBook);
+            }
+            else if (parts[2] == "ranked" & parts[3] == "true")
+            {
+                BaseGradeBook gradeBook = new RankedGradeBook(name, true);
+                GradeBookUserInterface.CommandLoop(gradeBook);
+            }
+
+            if (parts[2] == "standard" & parts[3] == "false")
+            {
+                BaseGradeBook gradeBook = new StandardGradeBook(name, false);
+                GradeBookUserInterface.CommandLoop(gradeBook);
+            }
+            else if (parts[2] == "ranked" & parts[3] == "false")
+            {
+                BaseGradeBook gradeBook = new RankedGradeBook(name, false);
+                GradeBookUserInterface.CommandLoop(gradeBook);
             }
             else
             {
-                Console.WriteLine("Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
+                Console.WriteLine($"{parts[2]} is not a supported type of gradebook, please try again");
+                return;
             }
+
+            Console.WriteLine("Created gradebook {0}.", name);
             
-            // BaseGradeBook gradeBook = new BaseGradeBook(name);
-            // Console.WriteLine("Created gradebook {0}.", name);
-            // GradeBookUserInterface.CommandLoop(gradeBook);
             
-            var type = parts[2];
-            if (type == "standard")
+            /*
+            if (bool.TryParse(parts[3], out var isWeighted) &&
+                (parts[2].Equals("standard") || parts[2].Equals("ranked")))
             {
-                StandardGradeBook standardGradeBook = new StandardGradeBook(name, isWeighted);
-                //Console.WriteLine("Created gradebook {0}.", name);
-                //GradeBookUserInterface.CommandLoop(gradeBook);
-            }
-            else if (type == "ranked")
-            {
-                RankedGradeBook rankedGradeBook = new RankedGradeBook(name, isWeighted);
-                //Console.WriteLine("Created gradebook {0}.", name);
-                //GradeBookUserInterface.CommandLoop(gradeBook);
+                var name = parts[1];
+
+                if (parts[2].Equals("standard"))
+                {
+                    StandardGradeBook gradeBook = new StandardGradeBook(name, isWeighted);
+                    //Console.WriteLine("Created gradebook {0}.", name);
+                    //GradeBookUserInterface.CommandLoop(gradeBook);
+                }
+                else if (parts[2].Equals("ranked"))
+                {
+                    RankedGradeBook gradeBook = new RankedGradeBook(name, isWeighted);
+                    //Console.WriteLine("Created gradebook {0}.", name);
+                    //GradeBookUserInterface.CommandLoop(gradeBook);
+                }
             }
             else
             {
-                Console.WriteLine("Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
-            }
+                Console.WriteLine(
+                    "Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
+            }*/
         }
 
         public static void LoadCommand(string command)
